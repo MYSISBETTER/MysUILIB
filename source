@@ -14,8 +14,8 @@ local OrionLib = {
 	Flags = {},
 	Themes = {
 		Default = {
-			Main = Color3.fromRGB(25, 25, 25),
-			Second = Color3.fromRGB(32, 32, 32),
+			Main = Color3.fromRGB(0, 0, 0),
+			Second = Color3.fromRGB(0, 0, 0),
 			Stroke = Color3.fromRGB(60, 60, 60),
 			Divider = Color3.fromRGB(60, 60, 60),
 			Text = Color3.fromRGB(240, 240, 240),
@@ -99,12 +99,12 @@ end)
 
 local function AddDraggingFunctionality(DragPoint, Main)
 	pcall(function()
-		local Dragging, DragInput, MousePos, FramePos = false
+		local Dragging, DragInput, MousePos, Pos = false
 		DragPoint.InputBegan:Connect(function(Input)
 			if Input.UserInputType == Enum.UserInputType.MouseButton1 then
 				Dragging = true
 				MousePos = Input.Position
-				FramePos = Main.Position
+				Pos = Main.Position
 
 				Input.Changed:Connect(function()
 					if Input.UserInputState == Enum.UserInputState.End then
@@ -296,6 +296,7 @@ end)
 
 CreateElement("Frame", function(Color)
 	local Frame = Create("Frame", {
+		Size = UDim2.new(1, 0, 0, 0),
 		BackgroundColor3 = Color or Color3.fromRGB(255, 255, 255),
 		BorderSizePixel = 0
 	})
@@ -403,7 +404,7 @@ function OrionLib:MakeNotification(NotificationConfig)
 		local NotificationFrame = SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(25, 25, 25), 0, 10), {
 			Parent = NotificationParent, 
 			Size = UDim2.new(1, 0, 0, 0),
-			Position = UDim2.new(0.5, -250, 0, 0)
+			Position = UDim2.new(1, -55, 0, 0),
 			BackgroundTransparency = 0,
 			AutomaticSize = Enum.AutomaticSize.Y
 		}), {
@@ -594,7 +595,7 @@ function OrionLib:MakeWindow(WindowConfig)
 		TextSize = 20
 	}), "Text")
 
-	local WindowTopBarLine = AddThemeObject(SetProps(MakeElement(""), {
+	local WindowTopBarLine = AddThemeObject(SetProps(MakeElement("Frame"), {
 		Size = UDim2.new(1, 0, 0, 1),
 		Position = UDim2.new(0, 0, 1, -1)
 	}), "Stroke")
@@ -612,18 +613,18 @@ function OrionLib:MakeWindow(WindowConfig)
 		--	ImageColor3 = Color3.fromRGB(33, 33, 33),
 		--	ImageTransparency = 0.7
 		--}),
-		SetChildren(SetProps(MakeElement("T"), {
+		SetChildren(SetProps(MakeElement("TFrame"), {
 			Size = UDim2.new(1, 0, 0, 50),
 			Name = "TopBar"
 		}), {
 			WindowName,
 			WindowTopBarLine,
-			AddThemeObject(SetChildren(SetProps(MakeElement("Round", Color3.fromRGB(255, 255, 255), 0, 7), {
+			AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 7), {
 				Size = UDim2.new(0, 70, 0, 30),
 				Position = UDim2.new(1, -90, 0, 10)
 			}), {
 				AddThemeObject(MakeElement("Stroke"), "Stroke"),
-				AddThemeObject(SetProps(MakeElement(""), {
+				AddThemeObject(SetProps(MakeElement("Frame"), {
 					Size = UDim2.new(0, 1, 1, 0),
 					Position = UDim2.new(0.5, 0, 0, 0)
 				}), "Stroke"), 
@@ -727,7 +728,7 @@ function OrionLib:MakeWindow(WindowConfig)
 		TabConfig.Icon = TabConfig.Icon or ""
 		TabConfig.PremiumOnly = TabConfig.PremiumOnly or false
 
-		local Tab = SetChildren(SetProps(MakeElement("Button"), {
+		local TabFrame = SetChildren(SetProps(MakeElement("Button"), {
 			Size = UDim2.new(1, 0, 0, 30),
 			Parent = TabHolder
 		}), {
@@ -1711,8 +1712,8 @@ function OrionLib:MakeWindow(WindowConfig)
 	end  
 	
 	OrionLib:MakeNotification({
-		Name = "🎄 MYS.CLIENT Loaded 🎅",
-		Content = "Join The discord!",
+		Name = "🎄 MYS.CLIENT 🎅",
+		Content = "",
 		Time = 5
 	})
 	
