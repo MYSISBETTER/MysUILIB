@@ -403,7 +403,7 @@ function OrionLib:MakeNotification(NotificationConfig)
 		local NotificationFrame = SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(25, 25, 25), 0, 10), {
 			Parent = NotificationParent, 
 			Size = UDim2.new(1, 0, 0, 0),
-			Position = UDim2.new(0.5, -250, 0, 0)
+			Position = UDim2.new(1, -55, 0, 0),
 			BackgroundTransparency = 0,
 			AutomaticSize = Enum.AutomaticSize.Y
 		}), {
@@ -470,14 +470,14 @@ function OrionLib:MakeWindow(WindowConfig)
 	local UIHidden = false
 
 	WindowConfig = WindowConfig or {}
-	WindowConfig.Name = WindowConfig.Name or "🎄 MYS.CLIENT 🎅"
+	WindowConfig.Name = WindowConfig.Name or "Orion Library"
 	WindowConfig.ConfigFolder = WindowConfig.ConfigFolder or WindowConfig.Name
 	WindowConfig.SaveConfig = WindowConfig.SaveConfig or false
 	WindowConfig.HidePremium = WindowConfig.HidePremium or false
 	if WindowConfig.IntroEnabled == nil then
 		WindowConfig.IntroEnabled = true
 	end
-	WindowConfig.IntroText = WindowConfig.IntroText or "🎄 MYS.CLIENT 🎅"
+	WindowConfig.IntroText = WindowConfig.IntroText or "Orion Library"
 	WindowConfig.CloseCallback = WindowConfig.CloseCallback or function() end
 	WindowConfig.ShowIcon = WindowConfig.ShowIcon or false
 	WindowConfig.Icon = WindowConfig.Icon or "rbxassetid://8834748103"
@@ -594,7 +594,7 @@ function OrionLib:MakeWindow(WindowConfig)
 		TextSize = 20
 	}), "Text")
 
-	local WindowTopBarLine = AddThemeObject(SetProps(MakeElement(""), {
+	local WindowTopBarLine = AddThemeObject(SetProps(MakeElement("Frame"), {
 		Size = UDim2.new(1, 0, 0, 1),
 		Position = UDim2.new(0, 0, 1, -1)
 	}), "Stroke")
@@ -612,18 +612,18 @@ function OrionLib:MakeWindow(WindowConfig)
 		--	ImageColor3 = Color3.fromRGB(33, 33, 33),
 		--	ImageTransparency = 0.7
 		--}),
-		SetChildren(SetProps(MakeElement("T"), {
+		SetChildren(SetProps(MakeElement("TFrame"), {
 			Size = UDim2.new(1, 0, 0, 50),
 			Name = "TopBar"
 		}), {
 			WindowName,
 			WindowTopBarLine,
-			AddThemeObject(SetChildren(SetProps(MakeElement("Round", Color3.fromRGB(255, 255, 255), 0, 7), {
+			AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 7), {
 				Size = UDim2.new(0, 70, 0, 30),
 				Position = UDim2.new(1, -90, 0, 10)
 			}), {
 				AddThemeObject(MakeElement("Stroke"), "Stroke"),
-				AddThemeObject(SetProps(MakeElement(""), {
+				AddThemeObject(SetProps(MakeElement("Frame"), {
 					Size = UDim2.new(0, 1, 1, 0),
 					Position = UDim2.new(0.5, 0, 0, 0)
 				}), "Stroke"), 
@@ -727,7 +727,7 @@ function OrionLib:MakeWindow(WindowConfig)
 		TabConfig.Icon = TabConfig.Icon or ""
 		TabConfig.PremiumOnly = TabConfig.PremiumOnly or false
 
-		local Tab = SetChildren(SetProps(MakeElement("Button"), {
+		local TabFrame = SetChildren(SetProps(MakeElement("Button"), {
 			Size = UDim2.new(1, 0, 0, 30),
 			Parent = TabHolder
 		}), {
@@ -1711,8 +1711,8 @@ function OrionLib:MakeWindow(WindowConfig)
 	end  
 	
 	OrionLib:MakeNotification({
-		Name = "🎄 MYS.CLIENT Loaded 🎅",
-		Content = "Join The discord!",
+		Name = "UI Library Upgrade",
+		Content = "New UI Library Available at sirius.menu/discord and sirius.menu/rayfield",
 		Time = 5
 	})
 	
