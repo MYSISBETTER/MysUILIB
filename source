@@ -46,6 +46,7 @@ local function createSnowEffect(mainFrame)
     snowContainer.Size = UDim2.new(1, 0, 1, 0)
     snowContainer.BackgroundTransparency = 1
     snowContainer.ClipsDescendants = true
+    snowContainer.Active = false -- Ensures it doesn't block input for dragging
 
     local function spawnSnowflake()
         local snowflake = Instance.new("Frame")
