@@ -38,6 +38,43 @@ local function makeDraggable(frame, handle)
     end)
 end
 
+-- Function to create falling snow effect
+local function createSnowEffect(mainFrame)
+    local snowContainer = Instance.new("Frame")
+    snowContainer.Name = "SnowContainer"
+    snowContainer.Parent = mainFrame
+    snowContainer.Size = UDim2.new(1, 0, 1, 0)
+    snowContainer.BackgroundTransparency = 1
+    snowContainer.ClipsDescendants = true
+
+    local function spawnSnowflake()
+        local snowflake = Instance.new("Frame")
+        snowflake.Size = UDim2.new(0, math.random(4, 8), 0, math.random(4, 8))
+        snowflake.Position = UDim2.new(math.random(), 0, 0, 0)
+        snowflake.BackgroundColor3 = Color3.new(1, 1, 1)
+        snowflake.BorderSizePixel = 0
+        snowflake.Parent = snowContainer
+
+        local tweenService = game:GetService("TweenService")
+        local fallTween = tweenService:Create(
+            snowflake,
+            TweenInfo.new(math.random(3, 6), Enum.EasingStyle.Linear),
+            { Position = UDim2.new(snowflake.Position.X.Scale, 0, 1, 0) }
+        )
+
+        fallTween:Play()
+        fallTween.Completed:Connect(function()
+            snowflake:Destroy()
+        end)
+    end
+
+    -- Spawn snowflakes periodically
+    while snowContainer.Parent do
+        spawnSnowflake()
+        wait(0.1) -- Adjust this value to control snow density
+    end
+end
+
 -- Function to create the main UI
 function UILibrary:CreateUI(title)
     -- Create ScreenGui
@@ -91,20 +128,10 @@ function UILibrary:CreateUI(title)
     TabBarUICorner.CornerRadius = UDim.new(0, 10)
     TabBarUICorner.Parent = TabBar
 
-    -- Create Tab Container for Tab Buttons
-    local TabContainer = Instance.new("ScrollingFrame")
-    TabContainer.Name = "TabContainer"
-    TabContainer.Parent = TabBar
-    TabContainer.Size = UDim2.new(1, 0, 1, 0)
-    TabContainer.BackgroundTransparency = 1
-    TabContainer.ScrollBarThickness = 0
-    TabContainer.CanvasSize = UDim2.new(0, 0, 0, 0)
-
-    -- Add UIListLayout for Tab Buttons
-    local TabListLayout = Instance.new("UIListLayout")
-    TabListLayout.Parent = TabContainer
-    TabListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    TabListLayout.Padding = UDim.new(0, 5)
+    -- Update TabBar Position Dynamically
+    MainFrame:GetPropertyChangedSignal("Position"):Connect(function()
+        TabBar.Position = MainFrame.Position + UDim2.new(0, -140, 0, 0) -- Adjusts TabBar to remain offset
+    end)
 
     -- Create Content Frame
     local ContentFrame = Instance.new("Frame")
@@ -120,53 +147,8 @@ function UILibrary:CreateUI(title)
     ContentUICorner.CornerRadius = UDim.new(0, 10)
     ContentUICorner.Parent = ContentFrame
 
-    -- Update TabBar Position Dynamically
-    MainFrame:GetPropertyChangedSignal("Position"):Connect(function()
-        TabBar.Position = MainFrame.Position + UDim2.new(0, -140, 0, 0) -- Adjusts TabBar to remain offset
-    end)
-
-    -- Function to add tabs
-    function UILibrary:AddTab(tabName)
-        -- Create Tab Button
-        local TabButton = Instance.new("TextButton")
-        TabButton.Name = tabName
-        TabButton.Parent = TabContainer
-        TabButton.Size = UDim2.new(1, -10, 0, 40)
-        TabButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-        TabButton.Text = tabName
-        TabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-        TabButton.Font = Enum.Font.Gotham
-        TabButton.TextSize = 14
-        TabButton.BorderSizePixel = 0
-
-        -- Add UI Corner to Tab Button
-        local TabButtonUICorner = Instance.new("UICorner")
-        TabButtonUICorner.CornerRadius = UDim.new(0, 10)
-        TabButtonUICorner.Parent = TabButton
-
-        -- Create Tab Content Frame
-        local TabContent = Instance.new("Frame")
-        TabContent.Name = tabName .. "Content"
-        TabContent.Parent = ContentFrame
-        TabContent.Size = UDim2.new(1, 0, 1, 0)
-        TabContent.BackgroundTransparency = 1
-        TabContent.Visible = false
-
-        -- Tab Button Functionality
-        TabButton.MouseButton1Click:Connect(function()
-            for _, frame in pairs(ContentFrame:GetChildren()) do
-                if frame:IsA("Frame") then
-                    frame.Visible = false
-                end
-            end
-            TabContent.Visible = true
-        end)
-
-        -- Adjust CanvasSize for new tabs
-        TabContainer.CanvasSize = UDim2.new(0, 0, 0, TabListLayout.AbsoluteContentSize.Y)
-
-        return TabContent
-    end
+    -- Start snow effect
+    createSnowEffect(MainFrame)
 
     -- Make MainFrame draggable
     makeDraggable(MainFrame, TitleLabel) -- Drags MainFrame using TitleLabel
