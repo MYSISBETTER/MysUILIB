@@ -97,8 +97,8 @@ function UILibrary:CreateUI(title)
     TabBar.Name = "TabBar"
     TabBar.Parent = ScreenGui
     TabBar.AnchorPoint = Vector2.new(0, 0.5)
-    TabBar.Position = UDim2.new(0.24, 0, 0.5, 0) -- Adjusted to be closer to the main frame
-    TabBar.Size = UDim2.new(0, 120, 0, 300)
+    TabBar.Position = UDim2.new(0.30, 0, 0.5, 0) -- Adjusted to be closer to the main frame
+    TabBar.Size = UDim2.new(0, 40, 0, 300)
     TabBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     TabBar.BorderSizePixel = 0
 
