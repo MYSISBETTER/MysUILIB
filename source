@@ -19,6 +19,14 @@ local ConfigurationExtension = ".rfld"
 local HttpService = game:GetService("HttpService")
 local request = (syn and syn.request) or (fluxus and fluxus.request) or (http and http.request) or http_request or request
 
+-- Add music
+local music = Instance.new("Sound")
+music.SoundId = "rbxassetid://1838667764" -- Replace with your music asset ID
+music.Looped = true -- Set to true if you want the music to loop
+music.Volume = 0.5 -- Set the volume (0 to 1)
+music.Parent = MainFrame
+music:Play() -- Play the music
+
 local function getExecutor() 
 	if identifyexecutor then 
 		local e,v = identifyexecutor()
