@@ -15,45 +15,50 @@ local ConfigurationExtension = ".rfld"
 local HttpService = game:GetService("HttpService") 
 local request = (syn and syn.request) or (fluxus and fluxus.request) or (http and http.request) or http_request or request 
 
+-- Services
+local UserInputService = game:GetService("User InputService")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local CoreGui = game:GetService("CoreGui")
+
+-- Create the Rayfield GUI
+local Rayfield = Instance.new("ScreenGui")
+Rayfield.Name = "RayfieldGui"
+Rayfield.Parent = CoreGui
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(1, 0, 1, 0) -- Full screen
+MainFrame.BackgroundTransparency = 1 -- Transparent background
+MainFrame.Parent = Rayfield
+
 -- Function to create the snow falling effect
 local function createSnowEffect()
-    -- Create the ScreenGui
-    local ScreenGui = Instance.new("ScreenGui") 
-    ScreenGui.Name = "SnowEffectGui" 
-    ScreenGui.Parent = game:GetService("CoreGui") 
+    -- Function to create a snowflake
+    local function createSnowflake()
+        local Snowflake = Instance.new("Frame")
+        Snowflake.Size = UDim2.new(0, math.random(5, 10), 0, math.random(5, 10)) -- Random size
+        Snowflake.Position = UDim2.new(math.random(), 0, 0, 0) -- Random X position at the top
+        Snowflake.BackgroundColor3 = Color3.new(1, 1, 1) -- White color
+        Snowflake.BorderSizePixel = 0 -- No border
+        Snowflake.Parent = MainFrame
 
-    -- Create the main Frame
-    local MainFrame = Instance.new("Frame") 
-    MainFrame.Size = UDim2.new(1, 0, 1, 0) -- Full screen 
-    MainFrame.BackgroundTransparency = 1 -- Transparent background 
-    MainFrame.Parent = ScreenGui 
+        -- Tween the snowflake falling effect
+        local targetPosition = UDim2.new(Snowflake.Position.X.Scale, 0, 1, 0) -- Move to the bottom
+        local tweenInfo = TweenInfo.new(math.random(3, 6), Enum.EasingStyle.Linear) -- Random speed
+        local tween = TweenService:Create(Snowflake, tweenInfo, { Position = targetPosition })
 
-    -- Function to create a snowflake 
-    local function createSnowflake() 
-        local Snowflake = Instance.new("Frame") 
-        Snowflake.Size = UDim2.new(0, math.random(5, 10), 0, math.random(5, 10)) -- Random size 
-        Snowflake.Position = UDim2.new(math.random(), 0, 0, 0) -- Random X position at the top 
-        Snowflake.BackgroundColor3 = Color3.new(1, 1, 1) -- White color 
-        Snowflake.BorderSizePixel = 0 -- No border 
-        Snowflake.Parent = MainFrame 
+        tween:Play()
+        tween.Completed:Connect(function()
+            Snowflake:Destroy() -- Remove snowflake after it falls
+        end)
+    end
 
-        -- Tween the snowflake falling effect 
-        local TweenService = game:GetService("TweenService") 
-        local targetPosition = UDim2.new(Snowflake.Position.X.Scale, 0, 1, 0) -- Move to the bottom 
-        local tweenInfo = TweenInfo.new(math.random(3, 6), Enum.EasingStyle.Linear) -- Random speed 
-        local tween = TweenService:Create(Snowflake, tweenInfo, { Position = targetPosition }) 
-
-        tween:Play() 
-        tween.Completed:Connect(function() 
-            Snowflake:Destroy() -- Remove snowflake after it falls 
-        end) 
-    end 
-
-    -- Loop to continuously create snowflakes 
-    while true do 
-        createSnowflake() 
-        wait(0.1) -- Adjust for snowflake density 
-    end 
+    -- Loop to continuously create snowflakes
+    while true do
+        createSnowflake()
+        wait(0.1) -- Adjust for snowflake density
+    end
 end
 
 -- Call the snow effect function
