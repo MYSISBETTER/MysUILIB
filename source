@@ -1,6 +1,43 @@
 -- UI Library for Executor
 local UILibrary = {}
 
+-- Function to make a frame draggable
+local function makeDraggable(frame, handle)
+    local dragging, dragInput, dragStart, startPos
+
+    handle.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = true
+            dragStart = input.Position
+            startPos = frame.Position
+
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    handle.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            dragInput = input
+        end
+    end)
+
+    game:GetService("UserInputService").InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - dragStart
+            frame.Position = UDim2.new(
+                startPos.X.Scale,
+                startPos.X.Offset + delta.X,
+                startPos.Y.Scale,
+                startPos.Y.Offset + delta.Y
+            )
+        end
+    end)
+end
+
 -- Function to create the main UI
 function UILibrary:CreateUI(title)
     -- Create ScreenGui
@@ -23,21 +60,6 @@ function UILibrary:CreateUI(title)
     local MainUICorner = Instance.new("UICorner")
     MainUICorner.CornerRadius = UDim.new(0, 10)
     MainUICorner.Parent = MainFrame
-
-    -- Create Tab Bar (Independent)
-    local TabBar = Instance.new("Frame")
-    TabBar.Name = "TabBar"
-    TabBar.Parent = ScreenGui
-    TabBar.AnchorPoint = Vector2.new(0, 0.5)
-    TabBar.Position = UDim2.new(0.1, 0, 0.5, 0) -- Floating on the left side
-    TabBar.Size = UDim2.new(0, 120, 0, 300)
-    TabBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    TabBar.BorderSizePixel = 0
-
-    -- Add UI Corner to Tab Bar
-    local TabBarUICorner = Instance.new("UICorner")
-    TabBarUICorner.CornerRadius = UDim.new(0, 10)
-    TabBarUICorner.Parent = TabBar
 
     -- Add Title Label for the Main Frame
     local TitleLabel = Instance.new("TextLabel")
@@ -69,6 +91,21 @@ function UILibrary:CreateUI(title)
     local ContentUICorner = Instance.new("UICorner")
     ContentUICorner.CornerRadius = UDim.new(0, 10)
     ContentUICorner.Parent = ContentFrame
+
+    -- Create Tab Bar (Independent)
+    local TabBar = Instance.new("Frame")
+    TabBar.Name = "TabBar"
+    TabBar.Parent = ScreenGui
+    TabBar.AnchorPoint = Vector2.new(0, 0.5)
+    TabBar.Position = UDim2.new(0.1, 0, 0.5, 0) -- Floating on the left side
+    TabBar.Size = UDim2.new(0, 120, 0, 300)
+    TabBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    TabBar.BorderSizePixel = 0
+
+    -- Add UI Corner to Tab Bar
+    local TabBarUICorner = Instance.new("UICorner")
+    TabBarUICorner.CornerRadius = UDim.new(0, 10)
+    TabBarUICorner.Parent = TabBar
 
     -- Create Tab Container for Tab Buttons
     local TabContainer = Instance.new("ScrollingFrame")
@@ -127,6 +164,10 @@ function UILibrary:CreateUI(title)
 
         return TabContent
     end
+
+    -- Make MainFrame and TabBar draggable
+    makeDraggable(MainFrame, TitleLabel) -- Drags MainFrame using TitleLabel
+    makeDraggable(TabBar, TabBar) -- Drags TabBar using itself
 
     return self
 end
