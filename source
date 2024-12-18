@@ -51,13 +51,13 @@ local RayfieldLibrary = {
 			TextColor = Color3.fromRGB(240, 240, 240),
 
 			Background = Color3.fromRGB(0, 0, 0),
-			Topbar = Color3.fromRGB(220, 1, 1),
+			Topbar = Color3.fromRGB(80, 1, 1),
 			Shadow = Color3.fromRGB(42, 0, 0),
 
 			NotificationBackground = Color3.fromRGB(0, 0, 0),
 			NotificationActionsBackground = Color3.fromRGB(240, 1, 1),
 
-			TabBackground = Color3.fromRGB(240, 1, 1),
+			TabBackground = Color3.fromRGB(80, 1, 1),
 			TabStroke = Color3.fromRGB(174, 1, 1),
 			TabBackgroundSelected = Color3.fromRGB(236, 56, 56),
 			TabTextColor = Color3.fromRGB(160, 160, 160),
@@ -69,7 +69,7 @@ local RayfieldLibrary = {
 			ElementStroke = Color3.fromRGB(50, 50, 50),
 			SecondaryElementStroke = Color3.fromRGB(40, 40, 40),
 
-			SliderBackground = Color3.fromRGB(50, 50, 50),
+			SliderBackground = Color3.fromRGB(0, 0, 0),
 			SliderProgress = Color3.fromRGB(40, 1, 1),
 			SliderStroke = Color3.fromRGB(80, 1, 1),
 
@@ -1237,9 +1237,9 @@ function RayfieldLibrary:CreateWindow(Settings)
 	local Passthrough = false
 	Topbar.Title.Text = Settings.Name
 
-	Main.Size = UDim2.new(0, 420, 0, 300)
+	Main.Size = UDim2.new(0, 420, 0, 100)
 	Main.Visible = true
-	Main.BackgroundTransparency = 1
+	Main.BackgroundTransparency = 0.8
 	if Main:FindFirstChild('Notice') then Main.Notice.Visible = false end
 	Main.Shadow.Image.ImageTransparency = 1
 
@@ -1450,7 +1450,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 			KeyMain.NoteMessage.Text = Settings.KeySettings.Note or "No instructions"
 
 			KeyMain.Size = UDim2.new(0, 467, 0, 175)
-			KeyMain.BackgroundTransparency = 1
+			KeyMain.BackgroundTransparency = 0.8
 			KeyMain.Shadow.Image.ImageTransparency = 1
 			KeyMain.Title.TextTransparency = 1
 			KeyMain.Subtitle.TextTransparency = 1
