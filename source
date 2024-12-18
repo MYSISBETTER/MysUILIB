@@ -92,12 +92,12 @@ function UILibrary:CreateUI(title)
     ContentUICorner.CornerRadius = UDim.new(0, 10)
     ContentUICorner.Parent = ContentFrame
 
-    -- Create Tab Bar (Independent)
+    -- Create Tab Bar (Now Parented to MainFrame)
     local TabBar = Instance.new("Frame")
     TabBar.Name = "TabBar"
-    TabBar.Parent = ScreenGui
+    TabBar.Parent = MainFrame -- Parent to MainFrame so it moves together
     TabBar.AnchorPoint = Vector2.new(0, 0.5)
-    TabBar.Position = UDim2.new(0.1, 0, 0.5, 0) -- Floating on the left side
+    TabBar.Position = UDim2.new(-0.25, 0, 0.5, 0) -- Adjusted to the left of MainFrame
     TabBar.Size = UDim2.new(0, 120, 0, 300)
     TabBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     TabBar.BorderSizePixel = 0
@@ -165,9 +165,8 @@ function UILibrary:CreateUI(title)
         return TabContent
     end
 
-    -- Make MainFrame and TabBar draggable
+    -- Make MainFrame draggable
     makeDraggable(MainFrame, TitleLabel) -- Drags MainFrame using TitleLabel
-    makeDraggable(TabBar, TabBar) -- Drags TabBar using itself
 
     return self
 end
