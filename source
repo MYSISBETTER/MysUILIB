@@ -78,12 +78,11 @@ function UILibrary:CreateUI(title)
     TitleLabelUICorner.CornerRadius = UDim.new(0, 10)
     TitleLabelUICorner.Parent = TitleLabel
 
-    -- Create Tab Bar (Now inside MainFrame)
+    -- Create Tab Bar
     local TabBar = Instance.new("Frame")
     TabBar.Name = "TabBar"
-    TabBar.Parent = MainFrame -- Parent to MainFrame so it moves together
-    TabBar.Position = UDim2.new(0, -130, 0, 40) -- Positioned slightly to the left of MainFrame
-    TabBar.Size = UDim2.new(0, 120, 0, 360)
+    TabBar.Parent = ScreenGui -- Parent to ScreenGui but position it relative to MainFrame
+    TabBar.Size = UDim2.new(0, 120, 0, 400)
     TabBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     TabBar.BorderSizePixel = 0
 
@@ -120,6 +119,11 @@ function UILibrary:CreateUI(title)
     local ContentUICorner = Instance.new("UICorner")
     ContentUICorner.CornerRadius = UDim.new(0, 10)
     ContentUICorner.Parent = ContentFrame
+
+    -- Update TabBar Position Dynamically
+    MainFrame:GetPropertyChangedSignal("Position"):Connect(function()
+        TabBar.Position = MainFrame.Position + UDim2.new(0, -140, 0, 0) -- Adjusts TabBar to remain offset
+    end)
 
     -- Function to add tabs
     function UILibrary:AddTab(tabName)
