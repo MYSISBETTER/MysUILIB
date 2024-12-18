@@ -50,18 +50,18 @@ local RayfieldLibrary = {
 		Default = {
 			TextColor = Color3.fromRGB(240, 240, 240),
 
-			Background = Color3.fromRGB(25, 25, 25),
-			Topbar = Color3.fromRGB(34, 34, 34),
-			Shadow = Color3.fromRGB(20, 20, 20),
+			Background = Color3.fromRGB(0, 0, 0),
+			Topbar = Color3.fromRGB(220, 1, 1),
+			Shadow = Color3.fromRGB(42, 0, 0),
 
-			NotificationBackground = Color3.fromRGB(20, 20, 20),
-			NotificationActionsBackground = Color3.fromRGB(230, 230, 230),
+			NotificationBackground = Color3.fromRGB(0, 0, 0),
+			NotificationActionsBackground = Color3.fromRGB(240, 1, 1),
 
-			TabBackground = Color3.fromRGB(80, 80, 80),
-			TabStroke = Color3.fromRGB(85, 85, 85),
-			TabBackgroundSelected = Color3.fromRGB(210, 210, 210),
-			TabTextColor = Color3.fromRGB(240, 240, 240),
-			SelectedTabTextColor = Color3.fromRGB(50, 50, 50),
+			TabBackground = Color3.fromRGB(240, 1, 1),
+			TabStroke = Color3.fromRGB(174, 1, 1),
+			TabBackgroundSelected = Color3.fromRGB(236, 56, 56),
+			TabTextColor = Color3.fromRGB(160, 160, 160),
+			SelectedTabTextColor = Color3.fromRGB(120, 120, 120),
 
 			ElementBackground = Color3.fromRGB(35, 35, 35),
 			ElementBackgroundHover = Color3.fromRGB(40, 40, 40),
@@ -69,22 +69,22 @@ local RayfieldLibrary = {
 			ElementStroke = Color3.fromRGB(50, 50, 50),
 			SecondaryElementStroke = Color3.fromRGB(40, 40, 40),
 
-			SliderBackground = Color3.fromRGB(50, 138, 220),
-			SliderProgress = Color3.fromRGB(50, 138, 220),
-			SliderStroke = Color3.fromRGB(58, 163, 255),
+			SliderBackground = Color3.fromRGB(50, 50, 50),
+			SliderProgress = Color3.fromRGB(40, 1, 1),
+			SliderStroke = Color3.fromRGB(80, 1, 1),
 
-			ToggleBackground = Color3.fromRGB(30, 30, 30),
-			ToggleEnabled = Color3.fromRGB(0, 146, 214),
-			ToggleDisabled = Color3.fromRGB(100, 100, 100),
-			ToggleEnabledStroke = Color3.fromRGB(0, 170, 255),
-			ToggleDisabledStroke = Color3.fromRGB(125, 125, 125),
-			ToggleEnabledOuterStroke = Color3.fromRGB(100, 100, 100),
-			ToggleDisabledOuterStroke = Color3.fromRGB(65, 65, 65),
+			ToggleBackground = Color3.fromRGB(40, 1, 1),
+			ToggleEnabled = Color3.fromRGB(40, 1, 1),
+			ToggleDisabled = Color3.fromRGB(50, 50, 50),
+			ToggleEnabledStroke = Color3.fromRGB(80, 1, 1),
+			ToggleDisabledStroke = Color3.fromRGB(80, 80, 80),
+			ToggleEnabledOuterStroke = Color3.fromRGB(40, 1, 1),
+			ToggleDisabledOuterStroke = Color3.fromRGB(50, 50, 50),
 
-			DropdownSelected = Color3.fromRGB(40, 40, 40),
-			DropdownUnselected = Color3.fromRGB(30, 30, 30),
+			DropdownSelected = Color3.fromRGB(40, 1, 1),
+			DropdownUnselected = Color3.fromRGB(40, 1, 1),
 
-			InputBackground = Color3.fromRGB(30, 30, 30),
+			InputBackground = Color3.fromRGB(40, 1, 1),
 			InputStroke = Color3.fromRGB(65, 65, 65),
 			PlaceholderColor = Color3.fromRGB(178, 178, 178)
 		},
@@ -809,10 +809,10 @@ function RayfieldLibrary:Notify(data) -- action e.g open messages
 		newNotification.UIStroke.Color = SelectedTheme.TextColor
 		newNotification.Icon.ImageColor3 = SelectedTheme.TextColor
 
-		newNotification.BackgroundTransparency = 1
+		newNotification.BackgroundTransparency = 0.8
 		newNotification.Title.TextTransparency = 1
 		newNotification.Description.TextTransparency = 1
-		newNotification.UIStroke.Transparency = 1
+		newNotification.UIStroke.Transparency = 0.8
 		newNotification.Shadow.ImageTransparency = 1
 		newNotification.Size = UDim2.new(1, 0, 0, 800)
 		newNotification.Icon.ImageTransparency = 1
@@ -832,7 +832,7 @@ function RayfieldLibrary:Notify(data) -- action e.g open messages
 		newNotification.Size = UDim2.new(1, -60, 0, -Notifications:FindFirstChild("UIListLayout").Padding.Offset)
 
 		newNotification.Icon.Size = UDim2.new(0, 32, 0, 32)
-		newNotification.Icon.Position = UDim2.new(0, 20, 0.5, 0)
+		newNotification.Icon.Position = UDim2.new(0.5, -newNotification.Icon.Size.X.Offset / 2, 0, 20)
 
 		TweenService:Create(newNotification, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Size = UDim2.new(1, 0, 0, math.max(bounds[1] + bounds[2] + 31, 60))}):Play()
 
@@ -3075,10 +3075,10 @@ function RayfieldLibrary:CreateWindow(Settings)
 	TweenService:Create(Main, TweenInfo.new(0.6, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Size = useMobileSizing and UDim2.new(0, 500, 0, 275) or UDim2.new(0, 500, 0, 475)}):Play()
 	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Exponential), {ImageTransparency = 0.6}):Play()
 
-	Topbar.BackgroundTransparency = 1
+	Topbar.BackgroundTransparency = 0.5
 	Topbar.Divider.Size = UDim2.new(0, 0, 0, 1)
 	Topbar.Divider.BackgroundColor3 = SelectedTheme.ElementStroke
-	Topbar.CornerRepair.BackgroundTransparency = 1
+	Topbar.CornerRepair.BackgroundTransparency = 0.5
 	Topbar.Title.TextTransparency = 1
 	Topbar.Search.ImageTransparency = 1
 	Topbar.ChangeSize.ImageTransparency = 1
@@ -3286,11 +3286,11 @@ if useStudio then
 
 
 	local Window = RayfieldLibrary:CreateWindow({
-		Name = "Rayfield Example Window",
-		LoadingTitle = "Rayfield Interface Suite",
+		Name = "🎄 MYS.CLIENT PREMIUM 🎅",
+		LoadingTitle = "🎄 MYS.CLIENT 🎅",
 		Theme = 'Default',
 		Icon = 0,
-		LoadingSubtitle = "by Sirius",
+		LoadingSubtitle = "By MYS",
 		ConfigurationSaving = {
 			Enabled = true,
 			FolderName = nil, -- Create a custom folder for your hub/game
