@@ -46,7 +46,7 @@ local function createSnowEffect(mainFrame)
     snowContainer.Size = UDim2.new(1, 0, 1, 0)
     snowContainer.BackgroundTransparency = 1
     snowContainer.ClipsDescendants = true
-    snowContainer.Active = false -- Ensures it doesn't block input for dragging
+    snowContainer.ZIndex = 0 -- Ensure it does not block input for TitleLabel
 
     local function spawnSnowflake()
         local snowflake = Instance.new("Frame")
@@ -54,6 +54,7 @@ local function createSnowEffect(mainFrame)
         snowflake.Position = UDim2.new(math.random(), 0, 0, 0)
         snowflake.BackgroundColor3 = Color3.new(1, 1, 1)
         snowflake.BorderSizePixel = 0
+        snowflake.ZIndex = 1 -- Snowflakes stay below interactive UI
         snowflake.Parent = snowContainer
 
         local tweenService = game:GetService("TweenService")
@@ -110,6 +111,7 @@ function UILibrary:CreateUI(title)
     TitleLabel.Font = Enum.Font.Gotham
     TitleLabel.TextSize = 18
     TitleLabel.BorderSizePixel = 0
+    TitleLabel.ZIndex = 2 -- Ensure it's above snow
 
     -- Add UI Corner to Title Label
     local TitleLabelUICorner = Instance.new("UICorner")
