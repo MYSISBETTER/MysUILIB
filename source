@@ -1,55 +1,23 @@
---[[ 
-Rayfield Interface Suite 
-by Sirius 
+--[[
 
-shlex | Designing + Programming 
-iRay  | Programming 
-]] 
+Rayfield Interface Suite
+by Sirius
 
-local InterfaceBuild = 'K7GD' 
-local Release = "Build 1.54" 
-local RayfieldFolder = "Rayfield" 
-local ConfigurationFolder = RayfieldFolder.."/Configurations" 
-local ConfigurationExtension = ".rfld" 
+shlex | Designing + Programming
+iRay  | Programming
 
-local HttpService = game:GetService("HttpService") 
-local request = (syn and syn.request) or (fluxus and fluxus.request) or (http and http.request) or http_request or request 
+]]
 
--- Services
-local UserInputService = game:GetService("User InputService")
-local TweenService = game:GetService("TweenService")
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
-local CoreGui = game:GetService("CoreGui")
 
--- Create the Rayfield GUI
-local Rayfield = Instance.new("ScreenGui")
-Rayfield.Name = "RayfieldGui"
-Rayfield.Parent = CoreGui
 
-local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(1, 0, 1, 0) -- Full screen
-MainFrame.BackgroundTransparency = 1 -- Transparent background
-MainFrame.Parent = Rayfield
+local InterfaceBuild = 'K7GD'
+local Release = "Build 1.54"
+local RayfieldFolder = "Rayfield"
+local ConfigurationFolder = RayfieldFolder.."/Configurations"
+local ConfigurationExtension = ".rfld"
 
--- Create a transparent bar at the bottom of the screen
-local bottomBar = Instance.new("Frame")
-bottomBar.Size = UDim2.new(1, 0, 0, 50) -- Full width, 50 pixels height
-bottomBar.Position = UDim2.new(0, 0, 1, -50) -- Position at the bottom
-bottomBar.BackgroundColor3 = Color3.new(0, 0, 0) -- Black background
-bottomBar.BackgroundTransparency = 0.5 -- Semi-transparent
-bottomBar.Parent = MainFrame
-
--- Create a TextLabel inside the bar
-local titleLabel = Instance.new("TextLabel")
-titleLabel.Size = UDim2.new(0, 300, 1, 0) -- Width of 300 pixels, full height
-titleLabel.Position = UDim2.new(0, 10, 0, 0) -- 10 pixels from the left
-titleLabel.BackgroundTransparency = 1 -- Transparent background
-titleLabel.Text = "🎄 MYS.CLIENT PREMIUM 🎅" -- The text to display
-titleLabel.TextColor3 = Color3.new(1, 1, 1) -- White text color
-titleLabel.TextSize = 24 -- Text size
-titleLabel.Font = Enum.Font.SourceSansBold -- Bold font
-titleLabel.Parent = bottomBar
+local HttpService = game:GetService("HttpService")
+local request = (syn and syn.request) or (fluxus and fluxus.request) or (http and http.request) or http_request or request
 
 local function getExecutor() 
 	if identifyexecutor then 
@@ -1333,8 +1301,8 @@ function RayfieldLibrary:CreateWindow(Settings)
 			while true do
 				task.wait(math.random(180, 600))
 				RayfieldLibrary:Notify({
-					Title = "Mys Is A amazing coder",
-					Content = "",
+					Title = "Rayfield Interface",
+					Content = "Enjoying this UI library? Find it at sirius.menu/discord",
 					Duration = 7,
 					Image = 4370033185,
 				})
