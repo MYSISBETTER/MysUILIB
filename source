@@ -1,7 +1,6 @@
 -- UI Library for Executor
 local UILibrary = {}
 
--- Function to make a frame draggable
 local function makeDraggable(frame, handle)
     local dragging, dragInput, dragStart, startPos
 
@@ -37,6 +36,8 @@ local function makeDraggable(frame, handle)
         end
     end)
 end
+
+
 
 -- Function to create falling snow effect
 local function createSnowEffect(mainFrame)
@@ -153,8 +154,9 @@ function UILibrary:CreateUI(title)
     -- Start snow effect
     createSnowEffect(MainFrame)
 
-    -- Make MainFrame draggable
+  -- Make MainFrame and TabBar draggable
     makeDraggable(MainFrame, TitleLabel) -- Drags MainFrame using TitleLabel
+    makeDraggable(TabBar, TabBar) -- Drags TabBar using itself
 
     return self
 end
